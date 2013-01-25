@@ -1,6 +1,6 @@
 describe 'TimeParser', ->
   beforeEach ->
-      @parser = new TimeParser()
+    @parser = new TimeParser()
 
   describe 'from_minutes', ->
     it 'should do less than an hour', ->      

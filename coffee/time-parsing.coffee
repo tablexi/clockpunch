@@ -1,10 +1,12 @@
-$ = jQuery
+# We're only going to include this section if jQuery is defined
+if jQuery?
+  $ = jQuery
 
-$.fn.extend({
-  timeinput: (options) ->
-    this.each (input_field) ->
-      new TimeParsingInput(this)
-})
+  $.fn.extend({
+    timeinput: (options) ->
+      this.each (input_field) ->
+        new TimeParsingInput(this)
+  })
 
 class window.TimeParser
   # Convert a string value into minutes
