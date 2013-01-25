@@ -1,5 +1,5 @@
 #!/bin/bash
 
-coffee --compile --output bin coffee
+./build.sh
 coffee --compile --output spec/bin spec
 open spec/SpecRunner.html
