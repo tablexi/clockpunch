@@ -1,6 +1,6 @@
 describe 'TimeParser', ->
   beforeEach ->
-    @parser = new TimeParser()
+    @parser = TimeParser
 
   describe 'from_minutes', ->
     it 'should do less than an hour', ->      
@@ -25,6 +25,15 @@ describe 'TimeParser', ->
       expect(@parser.from_minutes(45.2)).toEqual "0:45"
 
   describe 'to_minutes', ->
+    it 'should handle a number', ->
+      expect(@parser.to_minutes(0)).toEqual 0
+
+    it 'should handle a number', ->
+      expect(@parser.to_minutes(30)).toEqual 30
+
+    it 'should handle empty string', ->
+      expect(@parser.to_minutes("")).toEqual 0
+
     describe 'just numbers', ->
       it 'should turn plain numbers into minutes', ->
         expect(@parser.to_minutes("12")).toEqual 12

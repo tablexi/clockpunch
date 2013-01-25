@@ -14,7 +14,7 @@ class window.TimeParser
   # 1:15 (one hour fifteen minutes) => 75 minutes
   # 0:15 or :15 => 15
   @to_minutes: (string) ->
-    string = string.replace /[^\d\:\.]/g, ''
+    string = string.toString().replace /[^\d\:\.]/g, ''
     
     return 0 if string == ''
 

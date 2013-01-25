@@ -19,7 +19,7 @@
 
     TimeParser.to_minutes = function(string) {
       var hours, minutes, parts;
-      string = string.replace(/[^\d\:\.]/g, '');
+      string = string.toString().replace(/[^\d\:\.]/g, '');
       if (string === '') {
         return 0;
       }

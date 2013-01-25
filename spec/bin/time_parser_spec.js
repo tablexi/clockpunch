@@ -3,7 +3,7 @@
 
   describe('TimeParser', function() {
     beforeEach(function() {
-      return this.parser = new TimeParser();
+      return this.parser = TimeParser;
     });
     describe('from_minutes', function() {
       it('should do less than an hour', function() {
@@ -29,6 +29,15 @@
       });
     });
     return describe('to_minutes', function() {
+      it('should handle a number', function() {
+        return expect(this.parser.to_minutes(0)).toEqual(0);
+      });
+      it('should handle a number', function() {
+        return expect(this.parser.to_minutes(30)).toEqual(30);
+      });
+      it('should handle empty string', function() {
+        return expect(this.parser.to_minutes("")).toEqual(0);
+      });
       describe('just numbers', function() {
         return it('should turn plain numbers into minutes', function() {
           return expect(this.parser.to_minutes("12")).toEqual(12);
