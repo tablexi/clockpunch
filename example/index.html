@@ -4,11 +4,25 @@
     <script src="../bin/time-parsing.js"></script>
     <script>
       $(function() {
+        console.debug('loading up timeinput');
         $('.timeinput').timeinput();
       });
     </script>
+    <style>
+    @import url("../bin/tooltip.css");
+      body {
+        font: 12pt sans-serif;
+      }
+      input {
+        font-size: inherit;
+      }
+    </style>
   </head>
   <body>
-    <input class="timeinput" type="text" name="test-input" value="30" />
+    <p>And some text in front of it
+      <input class="timeinput" type="text" name="test-input" value="30" />
+      Now this is some text afterwards that should be covered up.
+    </p>
+    
   </body>
 </html>

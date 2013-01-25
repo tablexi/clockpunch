@@ -1,0 +1,38 @@
+$tooltip-background: #eee;
+$tooltip-border: #ccc;
+$tooltip-box-shadow-color: rgba(0, 0, 0, 0.2);
+$tooltip-arrow-left-position: 7px;
+$tooltip-arrow-top-position: 12px;
+
+@mixin tooltip-arrow-base($offset) {
+  position: absolute;
+  display: inline-block;
+  content: '';
+  left: -($tooltip-arrow-left-position) + $offset;
+  top: $tooltip-arrow-top-position + $offset;
+  border-top: ($tooltip-arrow-left-position - $offset) solid transparent;
+  border-right: ($tooltip-arrow-left-position - $offset) solid $tooltip-background;
+  border-bottom: ($tooltip-arrow-left-position - $offset) solid transparent;
+}
+
+.tooltip {
+  position: absolute;
+  background: $tooltip-background;
+  border: 1px solid $tooltip-border;
+  padding: 10px 0.5em;
+  border-radius: 0.5em;
+  box-shadow: 0 5px 10px $tooltip-box-shadow-color;
+  color: #C00;
+  font-weight: bold;
+  top: -0.5em;
+  left: 98%;
+
+  &:before {
+    @include tooltip-arrow-base(0);
+    border-right-color: $tooltip-box-shadow-color;
+  }
+
+  &:after {
+    @include tooltip-arrow-base(1);
+  }
+}
