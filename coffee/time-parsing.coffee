@@ -1,3 +1,11 @@
+$ = jQuery
+
+$.fn.extend({
+  timeinput: (options) ->
+    this.each (input_field) ->
+      new TimeParsingInput(this)
+})
+
 class window.TimeParser
   # Convert a string value into minutes
   # 1.5 (i.e. hour and a half) => 90 minutes
@@ -36,3 +44,28 @@ class window.TimeParser
 
   pad: (str, max=2) ->
     if str.length < max then this.pad("0" + str, max) else str
+
+class TimeParsingInput
+  @parser = new TimeParser()
+
+  constructor: (elem) ->
+    @$elem = $ elem
+    
+    @create_hidden_field
+
+    @$elem.change ->
+      $this = $ this
+      # Set the value of the hidden field to this value in minutes
+      minutes = TimeParsingInput.parser.to_minutes($(this).val())
+      $this.next('input').val(minutes)
+      # Replace this value with H:MM format
+      $this.val(TimeParsingInput.parser.from_minutes(minutes))
+
+    @$elem.trigger('change')
+  
+  create_hidden_field: ->
+    field_name = @$elem.attr('name')
+    $new_field = $("<input type=\"hidden\" />").attr('name', field_name)
+    @$elem.after $new_field
+    @$elem.attr('name', "#{field_name}_display")
+
