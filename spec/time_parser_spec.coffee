@@ -26,8 +26,8 @@ describe 'TimeParser', ->
 
   describe 'to_minutes', ->
     describe 'just numbers', ->
-      it 'should turn plain numbers into hours', ->
-        expect(@parser.to_minutes("12")).toEqual 720
+      it 'should turn plain numbers into minutes', ->
+        expect(@parser.to_minutes("12")).toEqual 12
 
     describe 'with decimals', ->
       it 'should turn 0.5 into half an hour', ->
@@ -78,7 +78,7 @@ describe 'TimeParser', ->
         expect(@parser.to_minutes('abc')).toEqual 0
 
       it 'should discard letters, but leave the numbers', ->
-        expect(@parser.to_minutes('ab2c')).toEqual 120
+        expect(@parser.to_minutes('ab2c')).toEqual 2
 
       it 'should discard letters and leave colons', ->
         expect(@parser.to_minutes('abc')).toEqual 0

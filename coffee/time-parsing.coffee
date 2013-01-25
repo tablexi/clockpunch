@@ -14,9 +14,12 @@ class window.TimeParser
       hours = parseFloat(parts[0] || 0)
       # Drop anything after a decimal in minutes
       minutes = Math.floor(parseFloat(parts[1] || 0))
-    else
+    else if string.indexOf(".") >= 0
       hours = parseFloat(string)
       minutes = 0
+    else
+      hours = 0
+      minutes = parseFloat(string)
 
     Math.ceil(hours * 60 + minutes)
 
