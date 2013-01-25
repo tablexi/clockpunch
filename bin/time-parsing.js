@@ -80,7 +80,7 @@
         var $this, minutes;
         $this = $(this);
         minutes = TimeParser.to_minutes($(this).val());
-        $this.data('timeparser').$hidden_field.val(minutes);
+        $this.data('timeparser').$hidden_field.val(minutes).trigger('change');
         return $this.val(TimeParser.from_minutes(minutes));
       });
       this.$elem.trigger('change');

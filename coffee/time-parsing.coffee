@@ -65,7 +65,8 @@ class TimeParsingInput
       # Set the value of the hidden field to this value in minutes
       minutes = TimeParser.to_minutes($(this).val())
       $this.data('timeparser').$hidden_field.val(minutes)
-      
+                                            .trigger('change')
+        
       # Replace this value with H:MM format
       $this.val(TimeParser.from_minutes(minutes))
 
