@@ -30,6 +30,8 @@ describe 'TimeParser', ->
         expect(@parser.to_minutes("12")).toEqual 12
 
     describe 'with decimals', ->
+      it 'should turn .5 into half an hour', ->
+        expect(@parser.to_minutes(".5")).toEqual 30
       it 'should turn 0.5 into half an hour', ->
         expect(@parser.to_minutes("0.5")).toEqual 30
 
