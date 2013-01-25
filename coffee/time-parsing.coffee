@@ -1,10 +1,26 @@
 class window.TimeParser
-  constructor: ->
-    console.debug "Created new"
+  # Convert a string value into minutes
+  # 1.5 (i.e. hour and a half) => 90 minutes
+  # 1:15 (one hour fifteen minutes) => 75 minutes
+  # 0:15 or :15 => 15
   to_minutes: (string) ->
-    # string.split(':')
-    string
+    string = string.replace /[^\d\:\.]/g, ''
+    
+    return 0 if string == ''
 
+    if string.indexOf(":") >= 0
+      parts = string.split ':'
+      
+      hours = parseFloat(parts[0] || 0)
+      # Drop anything after a decimal in minutes
+      minutes = Math.floor(parseFloat(parts[1] || 0))
+    else
+      hours = parseFloat(string)
+      minutes = 0
+
+    Math.ceil(hours * 60 + minutes)
+
+  # Render minutes as H:MM
   from_minutes: (minutes) ->
     # Drop decimals
     minutes = Math.floor(minutes)
