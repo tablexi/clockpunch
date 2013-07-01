@@ -9,7 +9,7 @@ This library consists of two parts:
 
     var parser = new TimeParser()
     parser.to_minutes("1:27") // returns 87
-    
+
 ### Examples and rules
 <table>
   <tr>
@@ -46,6 +46,21 @@ This library consists of two parts:
     <td>Half an hour</td>
     <td>30</td>
   </tr>
+  <tr>
+    <td>1h30m</td>
+    <td>1 hour, 30 minutes</td>
+    <td>90</td>
+  </tr>
+  <tr>
+    <td>1h</td>
+    <td>1 hour</td>
+    <td>60</td>
+  </tr>
+  <tr>
+    <td>20m</td>
+    <td>20 minutes</td>
+    <td>20</td>
+  </tr>
 </table>
 
 ### Bad input
@@ -58,4 +73,11 @@ This library consists of two parts:
    - "1:30.2" is read like "1:30"
 - See spec/time_parser_spec.coffee for more examples of how input is handled.
 
+# Use in Forms
 
+Apply the jQuery plugin to the elements:
+
+    $('.timeinput').timeinput();
+
+# Building
+TODO: node, npm installation of coffeescript, sass installation
