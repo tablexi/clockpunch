@@ -1,13 +1,3 @@
-# We're only going to include this section if jQuery is defined
-if jQuery?
-  $ = jQuery
-
-  $.fn.extend({
-    timeinput: (options) ->
-      this.each (input_field) ->
-        new TimeParsingInput(this)
-  })
-
 class window.TimeParser
   constructor: (@time_format = "{HOURS}:{MINUTES}") ->
 
@@ -61,6 +51,9 @@ class window.TimeParser
 
   format: (hours, minutes) ->
     @time_format.replace('{HOURS}', hours).replace('{MINUTES}', TimeParser.pad(minutes.toString()))
+
+  transform: (string) ->
+    @from_minutes @to_minutes(string)
 
 
   ###

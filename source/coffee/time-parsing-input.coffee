@@ -1,12 +1,28 @@
+# We're only going to include this section if jQuery is defined
+if jQuery?
+  $ = jQuery
+
+  $.fn.extend({
+    timeinput: (options) ->
+      this.each (input_field) ->
+        new TimeParsingInput(this)
+  })
+
 class TimeParsingInput
 
   constructor: (elem, format = null) ->
-    self = this
     @$elem = $ elem
 
     @$elem.data('timeparser', this)
     @parser = new TimeParser()
 
+    if @$elem.is('input')
+      @configure_input(format)
+    else
+      @$elem.text @parser.transform(@$elem.text())
+
+  configure_input: (format) ->
+    self = this
     @create_hidden_field(format)
 
     @$elem.change ->
