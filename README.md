@@ -1,9 +1,10 @@
 # Time Parsing
 
-This library consists of two parts:
+This library comprises the following pieces:
 
 1. Functions for parsing hour:minute strings and outputing minutes, and vice versa
 2. A jQuery plugin that binds to an input's change event to automatically update it to the H:MM format and store the integer minute value in a hidden field.
+3. A gem that you can use with Rails to include the library through the asset pipeline
 
 ## Parsing
 
@@ -79,5 +80,30 @@ Apply the jQuery plugin to the elements:
 
     $('.timeinput').timeinput();
 
+# Rails
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem "clockpunch"
+
+## Include the assets
+Add to your `application.js`
+
+    //= require clockpunch
+
+Add to your `application.scss`
+
+    //= require clockpunch
+
+# Standalone
+
+Copy `app/assets/javascripts/clockpunch.js` and `app/assets/stylesheets/clockpunch.css` into your
+application and include them using `<script src="clockpunch.js"></script>` and `<style>@import url(clockpunch.css)</style>`
+
 # Building
+
+From the `/source` directory, run `./build.sh`. This will generate the files in `app/assets`.
+
 TODO: node, npm installation of coffeescript, sass installation
