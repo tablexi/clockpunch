@@ -3,29 +3,51 @@
 
   describe('TimeParser', function() {
     beforeEach(function() {
-      return this.parser = TimeParser;
+      return this.parser = new TimeParser();
     });
     describe('from_minutes', function() {
-      it('should do less than an hour', function() {
-        return expect(this.parser.from_minutes(40)).toEqual("0:40");
+      describe('default format', function() {
+        it('should do less than an hour', function() {
+          return expect(this.parser.from_minutes(40)).toEqual("0:40");
+        });
+        it('should zero pad less than 10 minutes', function() {
+          return expect(this.parser.from_minutes(7)).toEqual("0:07");
+        });
+        it('should handle more than an hour', function() {
+          return expect(this.parser.from_minutes(90)).toEqual("1:30");
+        });
+        it('should zero pad between an hour and an hour ten', function() {
+          return expect(this.parser.from_minutes(124)).toEqual("2:04");
+        });
+        it('should handle zero', function() {
+          return expect(this.parser.from_minutes(0)).toEqual("0:00");
+        });
+        it('should go to zero on negative numbers', function() {
+          return expect(this.parser.from_minutes(-45)).toEqual("0:00");
+        });
+        return it('should round on decimals', function() {
+          return expect(this.parser.from_minutes(45.2)).toEqual("0:45");
+        });
       });
-      it('should zero pad less than 10 minutes', function() {
-        return expect(this.parser.from_minutes(7)).toEqual("0:07");
-      });
-      it('should handle more than an hour', function() {
-        return expect(this.parser.from_minutes(90)).toEqual("1:30");
-      });
-      it('should zero page between an hour and an hour ten', function() {
-        return expect(this.parser.from_minutes(124)).toEqual("2:04");
-      });
-      it('should handle zero', function() {
-        return expect(this.parser.from_minutes(0)).toEqual("0:00");
-      });
-      it('should go to zero on negative numbers', function() {
-        return expect(this.parser.from_minutes(-45)).toEqual("0:00");
-      });
-      return it('should round on decimals', function() {
-        return expect(this.parser.from_minutes(45.2)).toEqual("0:45");
+      return describe('XhXXm format', function() {
+        beforeEach(function() {
+          return this.parser = new TimeParser('{HOURS}h{MINUTES}m');
+        });
+        it('should do less than an hour', function() {
+          return expect(this.parser.from_minutes(40)).toEqual("0h40m");
+        });
+        it('should zero pad less than 10 minutes', function() {
+          return expect(this.parser.from_minutes(7)).toEqual("0h07m");
+        });
+        it('should handle more than an hour', function() {
+          return expect(this.parser.from_minutes(90)).toEqual("1h30m");
+        });
+        it('should zero pad between an hour and an hour ten', function() {
+          return expect(this.parser.from_minutes(124)).toEqual("2h04m");
+        });
+        return it('should handle zero', function() {
+          return expect(this.parser.from_minutes(0)).toEqual("0h00m");
+        });
       });
     });
     return describe('to_minutes', function() {
@@ -89,6 +111,20 @@
           return it('should convert an hour with decimal and add the minutes', function() {
             return expect(this.parser.to_minutes('1.2:01')).toEqual(73);
           });
+        });
+      });
+      describe('with XhXXm syntax', function() {
+        it('should handle a normal value', function() {
+          return expect(this.parser.to_minutes('1h15m')).toEqual(75);
+        });
+        it('should handle just minutes', function() {
+          return expect(this.parser.to_minutes('15m')).toEqual(15);
+        });
+        it('should handle just hours', function() {
+          return expect(this.parser.to_minutes('2h')).toEqual(120);
+        });
+        return it('should handle spaces', function() {
+          return expect(this.parser.to_minutes('2 h 10 m')).toEqual(130);
         });
       });
       return describe('bad inputs', function() {

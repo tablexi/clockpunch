@@ -1,28 +1,48 @@
 describe 'TimeParser', ->
   beforeEach ->
-    @parser = TimeParser
+    @parser = new TimeParser()
 
   describe 'from_minutes', ->
-    it 'should do less than an hour', ->      
-      expect(@parser.from_minutes(40)).toEqual "0:40"
+    describe 'default format', ->
+      it 'should do less than an hour', ->
+        expect(@parser.from_minutes(40)).toEqual "0:40"
 
-    it 'should zero pad less than 10 minutes', ->
-      expect(@parser.from_minutes(7)).toEqual "0:07"
+      it 'should zero pad less than 10 minutes', ->
+        expect(@parser.from_minutes(7)).toEqual "0:07"
 
-    it 'should handle more than an hour', ->
-      expect(@parser.from_minutes(90)).toEqual "1:30"
+      it 'should handle more than an hour', ->
+        expect(@parser.from_minutes(90)).toEqual "1:30"
 
-    it 'should zero page between an hour and an hour ten', ->
-      expect(@parser.from_minutes(124)).toEqual "2:04"
+      it 'should zero pad between an hour and an hour ten', ->
+        expect(@parser.from_minutes(124)).toEqual "2:04"
 
-    it 'should handle zero', ->
-      expect(@parser.from_minutes(0)).toEqual "0:00"
+      it 'should handle zero', ->
+        expect(@parser.from_minutes(0)).toEqual "0:00"
 
-    it 'should go to zero on negative numbers', ->
-      expect(@parser.from_minutes(-45)).toEqual "0:00"
+      it 'should go to zero on negative numbers', ->
+        expect(@parser.from_minutes(-45)).toEqual "0:00"
 
-    it 'should round on decimals', ->
-      expect(@parser.from_minutes(45.2)).toEqual "0:45"
+      it 'should round on decimals', ->
+        expect(@parser.from_minutes(45.2)).toEqual "0:45"
+
+    describe 'XhXXm format', ->
+      beforeEach ->
+        @parser = new TimeParser('{HOURS}h{MINUTES}m')
+
+      it 'should do less than an hour', ->
+        expect(@parser.from_minutes(40)).toEqual "0h40m"
+
+      it 'should zero pad less than 10 minutes', ->
+        expect(@parser.from_minutes(7)).toEqual "0h07m"
+
+      it 'should handle more than an hour', ->
+        expect(@parser.from_minutes(90)).toEqual "1h30m"
+
+      it 'should zero pad between an hour and an hour ten', ->
+        expect(@parser.from_minutes(124)).toEqual "2h04m"
+
+      it 'should handle zero', ->
+        expect(@parser.from_minutes(0)).toEqual "0h00m"
 
   describe 'to_minutes', ->
     it 'should handle a number', ->
@@ -83,6 +103,19 @@ describe 'TimeParser', ->
         # Correct behavior?
         it 'should convert an hour with decimal and add the minutes', ->
           expect(@parser.to_minutes('1.2:01')).toEqual 73
+
+    describe 'with XhXXm syntax', ->
+      it 'should handle a normal value', ->
+        expect(@parser.to_minutes('1h15m')).toEqual 75
+
+      it 'should handle just minutes', ->
+        expect(@parser.to_minutes('15m')).toEqual 15
+
+      it 'should handle just hours', ->
+        expect(@parser.to_minutes('2h')).toEqual 120
+
+      it 'should handle spaces', ->
+        expect(@parser.to_minutes('2 h 10 m')).toEqual 130
 
     describe 'bad inputs', ->
       it 'should discard letters', ->
