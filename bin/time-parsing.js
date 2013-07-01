@@ -2,6 +2,62 @@
 (function() {
   var $, TimeParsingInput;
 
+  TimeParsingInput = (function() {
+
+    function TimeParsingInput(elem, format) {
+      var self;
+      if (format == null) {
+        format = null;
+      }
+      self = this;
+      this.$elem = $(elem);
+      this.$elem.data('timeparser', this);
+      this.parser = new TimeParser();
+      this.create_hidden_field(format);
+      this.$elem.change(function() {
+        var $this, minutes;
+        $this = $(this);
+        minutes = self.parser.to_minutes($(this).val());
+        $this.data('timeparser').$hidden_field.val(minutes).trigger('change');
+        return $this.val(self.parser.from_minutes(minutes));
+      });
+      this.$elem.trigger('change');
+      this.create_tooltip();
+    }
+
+    TimeParsingInput.prototype.create_hidden_field = function() {
+      var field_name;
+      field_name = this.$elem.attr('name');
+      this.$hidden_field = $("<input type=\"hidden\" />").attr('name', field_name);
+      this.$elem.after(this.$hidden_field);
+      return this.$elem.attr('name', "" + field_name + "_display");
+    };
+
+    TimeParsingInput.prototype.create_tooltip = function() {
+      var $wrapper;
+      $wrapper = $('<div/>').css('position', 'relative').css('display', 'inline-block');
+      this.$elem.wrap($wrapper);
+      this.$tooltip = $('<span/>').addClass('tooltip').hide();
+      this.$tooltip.text(this.$elem.val());
+      this.$elem.after(this.$tooltip);
+      this.$elem.data('tooltip', this.$tooltip);
+      this.$elem.bind('keyup', function() {
+        var val;
+        val = $(this).val() || 0;
+        return $(this).data('tooltip').text(TimeParser.clean(val));
+      });
+      this.$elem.bind('focus', function() {
+        return $(this).data('tooltip').fadeIn('fast');
+      });
+      return this.$elem.bind('blur', function() {
+        return $(this).data('tooltip').fadeOut('fast');
+      });
+    };
+
+    return TimeParsingInput;
+
+  })();
+
   if (typeof jQuery !== "undefined" && jQuery !== null) {
     $ = jQuery;
     $.fn.extend({
@@ -136,62 +192,6 @@
     };
 
     return TimeParser;
-
-  })();
-
-  TimeParsingInput = (function() {
-
-    function TimeParsingInput(elem, format) {
-      var self;
-      if (format == null) {
-        format = null;
-      }
-      self = this;
-      this.$elem = $(elem);
-      this.$elem.data('timeparser', this);
-      this.parser = new TimeParser();
-      this.create_hidden_field(format);
-      this.$elem.change(function() {
-        var $this, minutes;
-        $this = $(this);
-        minutes = self.parser.to_minutes($(this).val());
-        $this.data('timeparser').$hidden_field.val(minutes).trigger('change');
-        return $this.val(self.parser.from_minutes(minutes));
-      });
-      this.$elem.trigger('change');
-      this.create_tooltip();
-    }
-
-    TimeParsingInput.prototype.create_hidden_field = function() {
-      var field_name;
-      field_name = this.$elem.attr('name');
-      this.$hidden_field = $("<input type=\"hidden\" />").attr('name', field_name);
-      this.$elem.after(this.$hidden_field);
-      return this.$elem.attr('name', "" + field_name + "_display");
-    };
-
-    TimeParsingInput.prototype.create_tooltip = function() {
-      var $wrapper;
-      $wrapper = $('<div/>').css('position', 'relative').css('display', 'inline-block');
-      this.$elem.wrap($wrapper);
-      this.$tooltip = $('<span/>').addClass('tooltip').hide();
-      this.$tooltip.text(this.$elem.val());
-      this.$elem.after(this.$tooltip);
-      this.$elem.data('tooltip', this.$tooltip);
-      this.$elem.bind('keyup', function() {
-        var val;
-        val = $(this).val() || 0;
-        return $(this).data('tooltip').text(TimeParser.clean(val));
-      });
-      this.$elem.bind('focus', function() {
-        return $(this).data('tooltip').fadeIn('fast');
-      });
-      return this.$elem.bind('blur', function() {
-        return $(this).data('tooltip').fadeOut('fast');
-      });
-    };
-
-    return TimeParsingInput;
 
   })();
 
