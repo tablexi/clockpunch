@@ -3,18 +3,19 @@ if jQuery?
   $ = jQuery
 
   $.fn.extend({
-    timeinput: (options) ->
+    timeinput: (options = {}) ->
       this.each (input_field) ->
-        new TimeParsingInput(this)
+        new TimeParsingInput(this, options['format'])
   })
 
 class TimeParsingInput
 
   constructor: (elem, format = null) ->
+    console.debug 'format'
     @$elem = $ elem
 
     @$elem.data('timeparser', this)
-    @parser = new TimeParser()
+    @parser = new TimeParser(format)
 
     if @$elem.is('input')
       @configure_input(format)
@@ -47,6 +48,8 @@ class TimeParsingInput
     @$elem.attr('name', "#{field_name}_display")
 
   create_tooltip: ->
+    self = this
+
     # Wrap in a relative position element so we can
     # position the tooltip accurately
     $wrapper = $('<div/>').css('position', 'relative')
@@ -64,7 +67,7 @@ class TimeParsingInput
 
     @$elem.bind 'keyup', ->
       val = $(this).val() || 0
-      $(this).data('tooltip').text TimeParser.clean(val)
+      $(this).data('tooltip').text self.parser.transform(val)
 
     @$elem.bind 'focus', ->
       $(this).data('tooltip').fadeIn('fast')

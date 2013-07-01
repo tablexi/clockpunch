@@ -5,6 +5,7 @@
     <script>
       $(function() {
         $('.timeinput').timeinput();
+        $('.timeinput-format').timeinput({ format: "{HOURS}h{MINUTES}m" });
       });
     </script>
     <style>
@@ -22,7 +23,9 @@
       <input class="timeinput" type="text" name="test-input" value="30" />
       Now this is some text afterwards that should be covered up.
     </p>
-    <p>Here is an inline <span class="timeinput">90</span> that should get converted.
+    <p>Here is an inline <span class="timeinput">90</span> that should get converted.</p>
+    <p>This is using a different format: <input class="timeinput-format" type="text" name="test-2" value="135" /></p>
+
 
   </body>
 </html>

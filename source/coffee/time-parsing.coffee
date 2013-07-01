@@ -1,5 +1,6 @@
 class window.TimeParser
-  constructor: (@time_format = "{HOURS}:{MINUTES}") ->
+  constructor: (@time_format = null) ->
+    @time_format ||= "{HOURS}:{MINUTES}"
 
   ###
   # Class Methods
@@ -12,10 +13,6 @@ class window.TimeParser
   @from_minutes: (minutes) ->
     parser = new TimeParser()
     parser.from_minutes(minutes)
-
-  @clean: (string) ->
-    minutes = TimeParser.to_minutes string
-    TimeParser.from_minutes minutes
 
   @pad: (str, max=2) ->
     if str.length < max then this.pad("0" + str, max) else str
