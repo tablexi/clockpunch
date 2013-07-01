@@ -38,7 +38,7 @@ class TimeParsingInput
     @$elem.wrap $wrapper
 
     # Build the tooltip
-    @$tooltip = $('<span/>').addClass('tooltip').hide()
+    @$tooltip = $('<span/>').addClass('clockpunch-tooltip').hide()
     @$tooltip.text @$elem.val()
     @$elem.after @$tooltip
 

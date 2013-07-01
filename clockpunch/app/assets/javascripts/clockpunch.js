@@ -44,7 +44,7 @@ https://github.com/tablexi/clockpunch
       var $wrapper;
       $wrapper = $('<div/>').css('position', 'relative').css('display', 'inline-block');
       this.$elem.wrap($wrapper);
-      this.$tooltip = $('<span/>').addClass('tooltip').hide();
+      this.$tooltip = $('<span/>').addClass('clockpunch-tooltip').hide();
       this.$tooltip.text(this.$elem.val());
       this.$elem.after(this.$tooltip);
       this.$elem.data('tooltip', this.$tooltip);

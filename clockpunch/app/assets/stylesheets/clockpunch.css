@@ -1,4 +1,4 @@
-.tooltip {
+.clockpunch-tooltip {
   position: absolute;
   background: #eeeeee;
   border: 1px solid #cccccc;
@@ -9,7 +9,7 @@
   font-weight: bold;
   top: -0.5em;
   left: 98%; }
-  .tooltip:before {
+  .clockpunch-tooltip:before {
     position: absolute;
     display: inline-block;
     content: '';
@@ -19,7 +19,7 @@
     border-right: 7px solid #eeeeee;
     border-bottom: 7px solid transparent;
     border-right-color: rgba(0, 0, 0, 0.2); }
-  .tooltip:after {
+  .clockpunch-tooltip:after {
     position: absolute;
     display: inline-block;
     content: '';

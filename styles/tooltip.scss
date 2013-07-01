@@ -15,7 +15,7 @@ $tooltip-arrow-top-position: 12px;
   border-bottom: ($tooltip-arrow-left-position - $offset) solid transparent;
 }
 
-.tooltip {
+.clockpunch-tooltip {
   position: absolute;
   background: $tooltip-background;
   border: 1px solid $tooltip-border;
