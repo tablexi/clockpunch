@@ -18,9 +18,15 @@ class TimeParsingInput
     @parser = new TimeParser(format)
 
     if @$elem.is('input')
-      @configure_input(format)
+      @configure_input
     else
-      @$elem.text @parser.transform(@$elem.text())
+      @configure_span(format)
+
+  configure_span: (format) ->
+    text = @$elem.text()
+    # if it's blank, don't do anything
+    return if text.replace(/\s/g, '') == ''
+    @$elem.text @parser.transform(text)
 
   configure_input: (format) ->
     self = this
