@@ -11,14 +11,13 @@ if jQuery?
 class TimeParsingInput
 
   constructor: (elem, format = null) ->
-    console.debug 'format'
     @$elem = $ elem
 
     @$elem.data('timeparser', this)
     @parser = new TimeParser(format)
 
     if @$elem.is('input')
-      @configure_input
+      @configure_input()
     else
       @configure_span(format)
 
@@ -31,6 +30,8 @@ class TimeParsingInput
   configure_input: (format) ->
     self = this
     @create_hidden_field(format)
+
+    @ensure_elem_is_text()
 
     @$elem.change ->
       $this = $ this
@@ -52,6 +53,13 @@ class TimeParsingInput
     @$hidden_field = $("<input type=\"hidden\" />").attr('name', field_name)
     @$elem.after @$hidden_field
     @$elem.attr('name', "#{field_name}_display")
+
+  ensure_elem_is_text: ->
+    return if @$elem.is('[type=text]')
+    new_elem = @$elem.clone(true)
+    new_elem.attr('type', 'text')
+    @$elem.replaceWith(new_elem)
+    @$elem = new_elem
 
   create_tooltip: ->
     self = this
