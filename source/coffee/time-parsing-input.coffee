@@ -54,9 +54,11 @@ class TimeParsingInput
     @$elem.after @$hidden_field
     @$elem.attr('name', "#{field_name}_display")
 
+  # If the element is something like type="number", then replace it with a text
+  # element. Most browsers won't let us just change the type.
   ensure_elem_is_text: ->
     return if @$elem.is('[type=text]')
-    new_elem = @$elem.clone(true)
+    new_elem = @$elem.clone(true) # true copies events and data
     new_elem.attr('type', 'text')
     @$elem.replaceWith(new_elem)
     @$elem = new_elem
