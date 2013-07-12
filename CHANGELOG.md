@@ -1,5 +1,10 @@
 # Clockpunch Changelog
 
+## Version 0.1.6 (July 12, 2013)
+
+  * New h?m format
+  * Ability to set default format across the board
+
 ## Version 0.1.5 (July 12, 2013)
 
   * Don't apply timeinput multiple times
