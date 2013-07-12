@@ -10,7 +10,7 @@ if jQuery?
 
 class TimeParsingInput
 
-  constructor: (elem, format = null) ->
+  constructor: (elem, format = 'default') ->
     @$elem = $ elem
 
     @$elem.data('timeparser', this)

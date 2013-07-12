@@ -1,6 +1,6 @@
 class window.TimeParser
-  constructor: (@time_format = null) ->
-    @time_format ||= "{HOURS}:{MINUTES}"
+  constructor: (time_format = null) ->
+    @time_format = @get_format_mapping(time_format)
 
   ###
   # Class Methods
@@ -44,10 +44,8 @@ class window.TimeParser
 
     hours = Math.floor(minutes / 60.0)
     mins = minutes % 60
-    @format(hours, mins)
 
-  format: (hours, minutes) ->
-    @time_format.replace('{HOURS}', hours).replace('{MINUTES}', TimeParser.pad(minutes.toString()))
+    @time_format(hours, mins)
 
   transform: (string) ->
     @from_minutes @to_minutes(string)
@@ -86,3 +84,31 @@ class window.TimeParser
       minutes = parseFloat(string)
 
     { hours: hours, minutes: minutes }
+
+
+  # If it's a function, return the function
+
+  get_format_mapping: (format) ->
+    # return the function if the argument is a function
+    return format if typeof format == 'function'
+
+    formats = {
+      default: (hours, minutes) ->
+        @default_string_format('{HOURS}:{MINUTES}', hours, minutes)
+      hm: (hours, minutes) ->
+        @default_string_format('{HOURS}h{MINUTES}m', hours, minutes)
+      minutes: (hours, minutes) ->
+        total_minutes = hours * 60 + minutes
+        total_minutes.toString()
+    }
+    # return the default if format is null
+    return formats['default'] unless format?
+
+    # If the key matches a format, return that. Otherwise use it as a normal string format
+    formats[format] || (hours, minutes) ->
+      @default_string_format(format, hours, minutes)
+
+
+  default_string_format: (format_string, hours, minutes) ->
+    format_string.replace('{HOURS}', hours).replace('{MINUTES}', TimeParser.pad(minutes.toString()))
+

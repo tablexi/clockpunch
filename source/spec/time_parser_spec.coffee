@@ -25,9 +25,9 @@ describe 'TimeParser', ->
       it 'should round on decimals', ->
         expect(@parser.from_minutes(45.2)).toEqual "0:45"
 
-    describe 'XhXXm format', ->
+    describe 'hm format', ->
       beforeEach ->
-        @parser = new TimeParser('{HOURS}h{MINUTES}m')
+        @parser = new TimeParser('hm')
 
       it 'should do less than an hour', ->
         expect(@parser.from_minutes(40)).toEqual "0h40m"
@@ -43,6 +43,23 @@ describe 'TimeParser', ->
 
       it 'should handle zero', ->
         expect(@parser.from_minutes(0)).toEqual "0h00m"
+
+    describe 'custom string format', ->
+      beforeEach ->
+        @parser = new TimeParser('r{HOURS}and{MINUTES}om')
+
+      it 'should handle a number', ->
+        expect(@parser.from_minutes(90)).toEqual "r1and30om"
+
+    describe 'function format', ->
+      beforeEach ->
+        fn = (hours, minutes) ->
+          total_minutes = hours * 60 + minutes
+          "#{total_minutes}m"
+        @parser = new TimeParser(fn)
+
+      it 'should return the value described by the function', ->
+        expect(@parser.from_minutes(90)).toEqual "90m"
 
   describe 'to_minutes', ->
     it 'should handle a number', ->
@@ -116,6 +133,9 @@ describe 'TimeParser', ->
 
       it 'should handle spaces', ->
         expect(@parser.to_minutes('2 h 10 m')).toEqual 130
+
+      it 'handles large minutes', ->
+        expect(@parser.to_minutes('85m')).toEqual 85
 
     describe 'bad inputs', ->
       it 'should discard letters', ->

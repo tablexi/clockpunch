@@ -27,7 +27,7 @@ https://github.com/tablexi/clockpunch
 
     function TimeParsingInput(elem, format) {
       if (format == null) {
-        format = null;
+        format = 'default';
       }
       this.$elem = $(elem);
       this.$elem.data('timeparser', this);
@@ -116,8 +116,10 @@ https://github.com/tablexi/clockpunch
   window.TimeParser = (function() {
 
     function TimeParser(time_format) {
-      this.time_format = time_format != null ? time_format : null;
-      this.time_format || (this.time_format = "{HOURS}:{MINUTES}");
+      if (time_format == null) {
+        time_format = null;
+      }
+      this.time_format = this.get_format_mapping(time_format);
     }
 
     /*
@@ -176,11 +178,7 @@ https://github.com/tablexi/clockpunch
       }
       hours = Math.floor(minutes / 60.0);
       mins = minutes % 60;
-      return this.format(hours, mins);
-    };
-
-    TimeParser.prototype.format = function(hours, minutes) {
-      return this.time_format.replace('{HOURS}', hours).replace('{MINUTES}', TimeParser.pad(minutes.toString()));
+      return this.time_format(hours, mins);
     };
 
     TimeParser.prototype.transform = function(string) {
@@ -232,6 +230,36 @@ https://github.com/tablexi/clockpunch
         hours: hours,
         minutes: minutes
       };
+    };
+
+    TimeParser.prototype.get_format_mapping = function(format) {
+      var formats;
+      if (typeof format === 'function') {
+        return format;
+      }
+      formats = {
+        "default": function(hours, minutes) {
+          return this.default_string_format('{HOURS}:{MINUTES}', hours, minutes);
+        },
+        hm: function(hours, minutes) {
+          return this.default_string_format('{HOURS}h{MINUTES}m', hours, minutes);
+        },
+        minutes: function(hours, minutes) {
+          var total_minutes;
+          total_minutes = hours * 60 + minutes;
+          return total_minutes.toString();
+        }
+      };
+      if (format == null) {
+        return formats['default'];
+      }
+      return formats[format] || function(hours, minutes) {
+        return this.default_string_format(format, hours, minutes);
+      };
+    };
+
+    TimeParser.prototype.default_string_format = function(format_string, hours, minutes) {
+      return format_string.replace('{HOURS}', hours).replace('{MINUTES}', TimeParser.pad(minutes.toString()));
     };
 
     return TimeParser;

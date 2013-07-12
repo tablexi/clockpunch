@@ -29,9 +29,9 @@
           return expect(this.parser.from_minutes(45.2)).toEqual("0:45");
         });
       });
-      return describe('XhXXm format', function() {
+      describe('hm format', function() {
         beforeEach(function() {
-          return this.parser = new TimeParser('{HOURS}h{MINUTES}m');
+          return this.parser = new TimeParser('hm');
         });
         it('should do less than an hour', function() {
           return expect(this.parser.from_minutes(40)).toEqual("0h40m");
@@ -47,6 +47,28 @@
         });
         return it('should handle zero', function() {
           return expect(this.parser.from_minutes(0)).toEqual("0h00m");
+        });
+      });
+      describe('custom string format', function() {
+        beforeEach(function() {
+          return this.parser = new TimeParser('r{HOURS}and{MINUTES}om');
+        });
+        return it('should handle a number', function() {
+          return expect(this.parser.from_minutes(90)).toEqual("r1and30om");
+        });
+      });
+      return describe('function format', function() {
+        beforeEach(function() {
+          var fn;
+          fn = function(hours, minutes) {
+            var total_minutes;
+            total_minutes = hours * 60 + minutes;
+            return "" + total_minutes + "m";
+          };
+          return this.parser = new TimeParser(fn);
+        });
+        return it('should return the value described by the function', function() {
+          return expect(this.parser.from_minutes(90)).toEqual("90m");
         });
       });
     });
@@ -123,8 +145,11 @@
         it('should handle just hours', function() {
           return expect(this.parser.to_minutes('2h')).toEqual(120);
         });
-        return it('should handle spaces', function() {
+        it('should handle spaces', function() {
           return expect(this.parser.to_minutes('2 h 10 m')).toEqual(130);
+        });
+        return it('handles large minutes', function() {
+          return expect(this.parser.to_minutes('85m')).toEqual(85);
         });
       });
       return describe('bad inputs', function() {

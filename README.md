@@ -74,6 +74,23 @@ This library comprises the following pieces:
    - "1:30.2" is read like "1:30"
 - See spec/time_parser_spec.coffee for more examples of how input is handled.
 
+### Formats
+
+There are three built-in formats:
+
+  * default: "H:MM"
+    * Zero-padded minutes
+  * hm: "HmMMm"
+    * Zero-padded minutes
+  * minutes: MMm
+    * Not zero-padded. Always show total minutes. E.g. 90 minutes stays "90m"
+
+To use one of the other formats, just pass it in the constructor, e.g. `new TimeParser('hm')`
+
+#### Custom formats
+
+You can also pass custom formats either as a string or a function. This feature is still in development.
+
 # Use in Forms
 
 Apply the jQuery plugin to the elements:
