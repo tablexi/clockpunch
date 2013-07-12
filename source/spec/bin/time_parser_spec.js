@@ -72,7 +72,7 @@
         });
       });
     });
-    return describe('to_minutes', function() {
+    describe('to_minutes', function() {
       it('should handle a number', function() {
         return expect(this.parser.to_minutes(0)).toEqual(0);
       });
@@ -168,6 +168,14 @@
         return it('should discard letters and leave decimals', function() {
           return expect(this.parser.to_minutes('2asdf.a5ad')).toEqual(150);
         });
+      });
+    });
+    return describe('setting default format', function() {
+      return it('uses the new format for new parsers', function() {
+        var parser;
+        TimeParser.set_default_format('hm');
+        parser = new TimeParser();
+        return expect(parser.from_minutes(30)).toEqual('0h30m');
       });
     });
   });

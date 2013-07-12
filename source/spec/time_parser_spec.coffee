@@ -152,3 +152,9 @@ describe 'TimeParser', ->
 
       it 'should discard letters and leave decimals', ->
         expect(@parser.to_minutes('2asdf.a5ad')).toEqual 150
+
+  describe 'setting default format', ->
+    it 'uses the new format for new parsers', ->
+      TimeParser.set_default_format 'hm'
+      parser = new TimeParser()
+      expect(parser.from_minutes(30)).toEqual('0h30m')

@@ -127,6 +127,10 @@ https://github.com/tablexi/clockpunch
     */
 
 
+    TimeParser.set_default_format = function(string) {
+      return this.default_format = string;
+    };
+
     TimeParser.to_minutes = function(string) {
       var parser;
       parser = new TimeParser();
@@ -251,7 +255,7 @@ https://github.com/tablexi/clockpunch
         }
       };
       if (format == null) {
-        return formats['default'];
+        return formats[TimeParser.default_format || 'default'];
       }
       return formats[format] || function(hours, minutes) {
         return this.default_string_format(format, hours, minutes);

@@ -6,6 +6,9 @@ class window.TimeParser
   # Class Methods
   ###
 
+  @set_default_format: (string) ->
+    @default_format = string
+
   @to_minutes: (string) ->
     parser = new TimeParser()
     parser.to_minutes(string)
@@ -102,7 +105,7 @@ class window.TimeParser
         total_minutes.toString()
     }
     # return the default if format is null
-    return formats['default'] unless format?
+    return formats[TimeParser.default_format || 'default'] unless format?
 
     # If the key matches a format, return that. Otherwise use it as a normal string format
     formats[format] || (hours, minutes) ->
