@@ -51,6 +51,9 @@ https://github.com/tablexi/clockpunch
     TimeParsingInput.prototype.configure_input = function(format) {
       var self;
       self = this;
+      if (this.$elem.hasClass('clockpunch-applied')) {
+        return;
+      }
       this.create_hidden_field(format);
       this.ensure_elem_is_text();
       this.$elem.change(function() {
@@ -61,7 +64,8 @@ https://github.com/tablexi/clockpunch
         return $this.val(self.parser.from_minutes(minutes));
       });
       this.$elem.trigger('change');
-      return this.create_tooltip();
+      this.create_tooltip();
+      return this.$elem.addClass('clockpunch-applied');
     };
 
     TimeParsingInput.prototype.create_hidden_field = function() {

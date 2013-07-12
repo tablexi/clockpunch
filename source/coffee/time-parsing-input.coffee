@@ -29,6 +29,8 @@ class TimeParsingInput
 
   configure_input: (format) ->
     self = this
+    return if @$elem.hasClass('clockpunch-applied')
+
     @create_hidden_field(format)
 
     @ensure_elem_is_text()
@@ -47,6 +49,8 @@ class TimeParsingInput
     @$elem.trigger('change')
 
     @create_tooltip()
+
+    @$elem.addClass('clockpunch-applied')
 
   create_hidden_field: ->
     field_name = @$elem.attr('name')
