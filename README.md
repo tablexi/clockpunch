@@ -76,7 +76,7 @@ This library comprises the following pieces:
 
 ### Formats
 
-There are three built-in formats:
+#### Built-in formats:
 
   * default: "H:MM"
     * Zero-padded minutes
@@ -84,6 +84,9 @@ There are three built-in formats:
     * Zero-padded minutes
   * minutes: MMm
     * Not zero-padded. Always show total minutes. E.g. 90 minutes stays "90m"
+  * h?m
+    * If more than an hour it's the same as 'hm'
+    * Does not zero-pad minutes if less than an hour
 
 To use one of the other formats, just pass it in the constructor, e.g. `new TimeParser('hm')`
 

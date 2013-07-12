@@ -49,6 +49,23 @@
           return expect(this.parser.from_minutes(0)).toEqual("0h00m");
         });
       });
+      describe('h?m format', function() {
+        beforeEach(function() {
+          return this.parser = new TimeParser('h?m');
+        });
+        it('should not have hours for less than an hour', function() {
+          return expect(this.parser.from_minutes(40)).toEqual("40m");
+        });
+        it('should have the hours for more than an hour', function() {
+          return expect(this.parser.from_minutes(75)).toEqual("1h15m");
+        });
+        it('zero-pads minutes if more than an hour', function() {
+          return expect(this.parser.from_minutes(65)).toEqual("1h05m");
+        });
+        return it('should not zero-pad the minutes', function() {
+          return expect(this.parser.from_minutes(5)).toEqual("5m");
+        });
+      });
       describe('custom string format', function() {
         beforeEach(function() {
           return this.parser = new TimeParser('r{HOURS}and{MINUTES}om');

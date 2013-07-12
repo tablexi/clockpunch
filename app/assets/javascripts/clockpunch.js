@@ -248,6 +248,13 @@ https://github.com/tablexi/clockpunch
         hm: function(hours, minutes) {
           return this.default_string_format('{HOURS}h{MINUTES}m', hours, minutes);
         },
+        "h?m": function(hours, minutes) {
+          if (hours > 0) {
+            return formats['hm'].call(this, hours, minutes);
+          } else {
+            return "" + minutes + "m";
+          }
+        },
         minutes: function(hours, minutes) {
           var total_minutes;
           total_minutes = hours * 60 + minutes;

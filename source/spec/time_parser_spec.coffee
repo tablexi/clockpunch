@@ -44,6 +44,22 @@ describe 'TimeParser', ->
       it 'should handle zero', ->
         expect(@parser.from_minutes(0)).toEqual "0h00m"
 
+    describe 'h?m format', ->
+      beforeEach ->
+        @parser = new TimeParser('h?m')
+
+      it 'should not have hours for less than an hour', ->
+        expect(@parser.from_minutes(40)).toEqual "40m"
+
+      it 'should have the hours for more than an hour', ->
+        expect(@parser.from_minutes(75)).toEqual "1h15m"
+
+      it 'zero-pads minutes if more than an hour', ->
+        expect(@parser.from_minutes(65)).toEqual "1h05m"
+
+      it 'should not zero-pad the minutes', ->
+        expect(@parser.from_minutes(5)).toEqual "5m"
+
     describe 'custom string format', ->
       beforeEach ->
         @parser = new TimeParser('r{HOURS}and{MINUTES}om')

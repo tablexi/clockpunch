@@ -100,6 +100,8 @@ class window.TimeParser
         @default_string_format('{HOURS}:{MINUTES}', hours, minutes)
       hm: (hours, minutes) ->
         @default_string_format('{HOURS}h{MINUTES}m', hours, minutes)
+      "h?m": (hours, minutes) ->
+        if hours > 0 then formats['hm'].call(@, hours, minutes) else "#{minutes}m"
       minutes: (hours, minutes) ->
         total_minutes = hours * 60 + minutes
         total_minutes.toString()
