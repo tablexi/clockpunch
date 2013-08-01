@@ -1,5 +1,10 @@
 # Clockpunch Changelog
 
+## Version 0.1.7 (August 1, 2013)
+
+  * Specify format via data-format attribute
+  * Long (e.g. "1 hour 30 minutes") output format
+
 ## Version 0.1.6 (July 12, 2013)
 
   * New h?m format
