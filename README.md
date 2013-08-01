@@ -87,6 +87,9 @@ This library comprises the following pieces:
   * h?m
     * If more than an hour it's the same as 'hm'
     * Does not zero-pad minutes if less than an hour
+  * long: "H hour(s), M minute(s)"
+    * Should only be used in spans (since it is not currently parsable)
+    * H will not be shown if zero
 
 To use one of the other formats, just pass it in the constructor, e.g. `new TimeParser('hm')`
 

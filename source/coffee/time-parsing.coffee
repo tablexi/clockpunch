@@ -105,6 +105,7 @@ class window.TimeParser
       minutes: (hours, minutes) ->
         total_minutes = hours * 60 + minutes
         total_minutes.toString()
+      long: @long_format
     }
     # return the default if format is null
     return formats[TimeParser.default_format || 'default'] unless format?
@@ -116,4 +117,17 @@ class window.TimeParser
 
   default_string_format: (format_string, hours, minutes) ->
     format_string.replace('{HOURS}', hours).replace('{MINUTES}', TimeParser.pad(minutes.toString()))
+
+  long_format: (hours, minutes) ->
+    output = []
+    output.push "#{hours} #{@pluralize(hours, 'hour')}" if hours > 0
+    output.push "#{minutes} #{@pluralize(minutes, 'minute')}" if minutes > 0 || (minutes == 0 && hours == 0)
+    output.join " "
+
+
+
+
+  # does not handle non-standard plurals
+  pluralize: (count, string) ->
+    if count == 1 then string else "#{string}s"
 

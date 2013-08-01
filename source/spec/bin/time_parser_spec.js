@@ -66,6 +66,26 @@
           return expect(this.parser.from_minutes(5)).toEqual("5m");
         });
       });
+      describe('long format', function() {
+        beforeEach(function() {
+          return this.parser = new TimeParser('long');
+        });
+        it('handles 1 hour', function() {
+          return expect(this.parser.from_minutes(60)).toEqual("1 hour");
+        });
+        it('handles multiple hours', function() {
+          return expect(this.parser.from_minutes(120)).toEqual("2 hours");
+        });
+        it('handles less than an hour', function() {
+          return expect(this.parser.from_minutes(45)).toEqual("45 minutes");
+        });
+        it('handles a combination of hours and minutes', function() {
+          return expect(this.parser.from_minutes(75)).toEqual("1 hour 15 minutes");
+        });
+        return it('handles zero time', function() {
+          return expect(this.parser.from_minutes(0)).toEqual("0 minutes");
+        });
+      });
       describe('custom string format', function() {
         beforeEach(function() {
           return this.parser = new TimeParser('r{HOURS}and{MINUTES}om');
