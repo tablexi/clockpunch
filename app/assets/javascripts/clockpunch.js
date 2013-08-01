@@ -17,7 +17,9 @@ https://github.com/tablexi/clockpunch
           options = {};
         }
         return this.each(function(input_field) {
-          return new TimeParsingInput(this, options['format']);
+          var format;
+          format = options['format'] || $(this).data('format');
+          return new TimeParsingInput(this, format);
         });
       }
     });

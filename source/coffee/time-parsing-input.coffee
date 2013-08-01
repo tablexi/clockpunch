@@ -5,7 +5,8 @@ if jQuery?
   $.fn.extend({
     timeinput: (options = {}) ->
       this.each (input_field) ->
-        new TimeParsingInput(this, options['format'])
+        format = options['format'] || $(this).data('format')
+        new TimeParsingInput(this, format)
   })
 
 class TimeParsingInput
