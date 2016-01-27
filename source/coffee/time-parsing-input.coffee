@@ -13,6 +13,7 @@ class TimeParsingInput
 
   constructor: (elem, format = 'default') ->
     @$elem = $ elem
+    return if @$elem.hasClass('clockpunch-applied')
 
     @$elem.data('timeparser', this)
     @parser = new TimeParser(format)
@@ -30,7 +31,6 @@ class TimeParsingInput
 
   configure_input: (format) ->
     self = this
-    return if @$elem.hasClass('clockpunch-applied')
 
     @create_hidden_field(format)
 
