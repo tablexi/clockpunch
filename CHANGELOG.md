@@ -1,5 +1,13 @@
 # Clockpunch Changelog
 
+## Version 0.1.9 (January 29, 2016)
+
+  * Fix errors if `clockpunch` is applied to the same element multiple times
+
+## Version 0.1.8 (September 24, 2015)
+
+  * Support Rails 4
+
 ## Version 0.1.7 (August 1, 2013)
 
   * Specify format via data-format attribute
