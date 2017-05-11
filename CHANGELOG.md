@@ -1,5 +1,10 @@
 # Clockpunch Changelog
 
+## Version 0.1.10 (May 10, 2017)
+
+  * Allow setting the hidden field directly and have it update the display field
+    with `$("[name=myfield]").val(45).trigger("change")`
+
 ## Version 0.1.9 (January 29, 2016)
 
   * Fix errors if `clockpunch` is applied to the same element multiple times
