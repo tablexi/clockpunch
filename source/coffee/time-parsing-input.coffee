@@ -56,6 +56,9 @@ class TimeParsingInput
   create_hidden_field: ->
     field_name = @$elem.attr('name')
     @$hidden_field = $("<input type=\"hidden\" />").attr('name', field_name)
+    @$hidden_field.change =>
+      new_value = @parser.from_minutes(@$hidden_field.val())
+      @$elem.val(new_value) if new_value != @$elem.val()
     @$elem.after @$hidden_field
     @$elem.attr('name', "#{field_name}_display")
 

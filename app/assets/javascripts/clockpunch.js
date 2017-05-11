@@ -72,6 +72,15 @@ https://github.com/tablexi/clockpunch
       var field_name;
       field_name = this.$elem.attr('name');
       this.$hidden_field = $("<input type=\"hidden\" />").attr('name', field_name);
+      this.$hidden_field.change((function(_this) {
+        return function() {
+          var new_value;
+          new_value = _this.parser.from_minutes(_this.$hidden_field.val());
+          if (new_value !== _this.$elem.val()) {
+            return _this.$elem.val(new_value);
+          }
+        };
+      })(this));
       this.$elem.after(this.$hidden_field);
       return this.$elem.attr('name', field_name + "_display");
     };
