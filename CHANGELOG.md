@@ -1,5 +1,10 @@
 # Clockpunch Changelog
 
+## Version 0.1.11 (May 19, 2017)
+
+  * Allow leaving a field blank until the user has taken action. Use this by
+    adding the `data-allow-init-blank` attribute to your `input`.
+
 ## Version 0.1.10 (May 10, 2017)
 
   * Allow setting the hidden field directly and have it update the display field
