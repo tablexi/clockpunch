@@ -46,8 +46,9 @@ class TimeParsingInput
       # Replace this value with H:MM format
       $this.val(self.parser.from_minutes(minutes))
 
-    # Make sure that we're up to date
-    @$elem.trigger('change')
+    if @$elem.val() || !@$elem.data("allow-init-blank")
+      # Make sure that we're up to date
+      @$elem.trigger('change')
 
     @create_tooltip()
 
@@ -82,7 +83,7 @@ class TimeParsingInput
 
     # Build the tooltip
     @$tooltip = $('<span/>').addClass('clockpunch-tooltip').hide()
-    @$tooltip.text @$elem.val()
+    @$tooltip.text(@$elem.val() || @parser.transform(0))
     @$elem.after @$tooltip
 
     # Store the tooltip as a data attribute on the element so we

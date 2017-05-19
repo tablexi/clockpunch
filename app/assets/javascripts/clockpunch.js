@@ -63,7 +63,9 @@ https://github.com/tablexi/clockpunch
         $this.data('timeparser').$hidden_field.val(minutes).trigger('change');
         return $this.val(self.parser.from_minutes(minutes));
       });
-      this.$elem.trigger('change');
+      if (this.$elem.val() || !this.$elem.data("allow-init-blank")) {
+        this.$elem.trigger('change');
+      }
       this.create_tooltip();
       return this.$elem.addClass('clockpunch-applied');
     };
@@ -102,7 +104,7 @@ https://github.com/tablexi/clockpunch
       $wrapper = $('<div/>').css('position', 'relative').css('display', 'inline-block');
       this.$elem.wrap($wrapper);
       this.$tooltip = $('<span/>').addClass('clockpunch-tooltip').hide();
-      this.$tooltip.text(this.$elem.val());
+      this.$tooltip.text(this.$elem.val() || this.parser.transform(0));
       this.$elem.after(this.$tooltip);
       this.$elem.data('tooltip', this.$tooltip);
       this.$elem.bind('keyup', function() {
