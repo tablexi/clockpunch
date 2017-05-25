@@ -1,5 +1,9 @@
 # Clockpunch Changelog
 
+## Version 0.1.12 (May 25, 2017)
+
+  * Include source mapping file for CSS
+
 ## Version 0.1.11 (May 19, 2017)
 
   * Allow leaving a field blank until the user has taken action. Use this by
